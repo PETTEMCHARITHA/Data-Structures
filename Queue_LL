@@ -1,0 +1,81 @@
+#include<stdio.h>
+struct Node{
+    int data;
+    struct Node* next;
+};
+struct Node* rear;
+struct Node* front;
+void insert(){
+    struct Node* ptr = (struct Node*)malloc(sizeof(struct Node));
+    int value;
+    if(ptr==NULL){
+        printf("overflow");
+    }
+    else{
+        printf("enter the value to be inserted: ");
+        scanf("%d",&value);
+        ptr->data=value;
+        if(front==NULL){
+            front=ptr;
+            rear=ptr;
+            rear->next=NULL;
+            front->next=NULL;
+        }
+        else{
+            rear->next=ptr;
+            rear=ptr;
+            rear->next=NULL;
+        }
+    }
+}
+void delete1(){
+    struct Node* ptr;
+    if(front==NULL){
+        printf("UNDERFLOW");
+    }
+    else{
+        ptr=front;
+        front=front->next;
+        free(ptr);
+    }
+}
+void display(){
+    struct Node* ptr;
+    ptr=front;
+    if(front==NULL){
+        printf("UNDERFLOW");
+    }
+    else{
+        printf("queue elements are ");
+        while(front!=NULL){
+            printf("%d ",ptr->data);
+            ptr=ptr->next;
+        }
+    }
+}
+int main(){
+    int choice;
+    while(1){
+        printf("main menu\n");
+        printf("1.insert \n2.delete \n3.display \n");
+        printf("enter your choice");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:
+                insert();
+                break;
+            case 2:
+                delete1();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                exit(0);
+                break;
+            default:
+                printf("enter valid choice");
+
+        }
+    }
+}
