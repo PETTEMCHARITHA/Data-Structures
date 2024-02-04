@@ -1,0 +1,82 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Node{
+    int value;
+    struct Node* next;
+};
+struct Node* head;
+void  push(){
+    int value;
+    struct Node* ptr=(struct Node*)malloc(sizeof(struct Node));
+    if(ptr==NULL){
+        printf("element is enable to insert");
+    }
+    else{
+        printf("enter value to be inserted : ");
+        scanf("%d",&value);
+        if(head==NULL){
+            ptr->value=value;
+            ptr->next=NULL;
+            head=ptr;
+        }
+        else{
+            ptr->value=value;
+            ptr->next=head;
+            head=ptr;
+        }
+    }
+    printf("Item Pushed\n");
+}
+void pop(){
+    int item;
+    struct Node* ptr;
+    if(head==NULL){
+        printf("UNDERFLOW");
+    }
+    else{
+        item=head->value;
+        ptr=head;
+        head=head->next;
+        free(ptr);
+        printf("ITEM POPPED");
+    }
+}
+void display(){
+    int i;
+    struct Node* ptr;
+    ptr=head;
+    if(ptr==NULL){
+        printf("stack is empty");
+    }
+    else{
+        printf("stack elements are : ");
+        while(ptr!=NULL){
+            printf("%d ",ptr->value);
+            ptr=ptr->next;
+        }
+    }
+}
+int main(){
+    int choice;
+    while (1) {
+        printf("\nMenu\n");
+        printf("1. Push\n2. Pop\n3. Display\n4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                push();
+                break;
+            case 2:
+                pop();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("Please enter a valid choice\n");
+        }
+    }
+}
