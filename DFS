@@ -1,0 +1,34 @@
+#include<stdio.h>
+void DFS(int size,int a[][size],int v[],int i){
+  int j;
+  printf("%d",i);
+  v[i]=1;
+  
+  for(j=0;j<size;j++){
+      if(a[i][j]==1 && !v[j]){
+          DFS(size,a,v,j);
+      }
+  }
+}   
+int main(){
+    int nodes,i,j,start;
+    printf("Enter no of nodes :");
+    scanf("%d",&nodes);
+    int a[nodes][nodes];
+    int v[nodes];
+    printf("Enter the MAtrix:");
+    for(i=0;i<nodes;i++){
+        for(j=0;j<nodes;j++){
+            scanf("%d",&a[i][j]);
+        }
+    }
+    for(i=0;i<nodes;i++){
+        v[i]=0;
+    }
+    printf("Enter the starting Vertex:");
+    scanf("%d",&start);
+    printf("DFS starting from vertex %d :",start);
+    DFS(nodes,a,v,start);
+    printf("\n");
+    return 0;
+}
