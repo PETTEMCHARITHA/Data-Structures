@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int stack[100], i, j, top = -1, n;
+
+void push() {
+    int val;
+    if (top == n - 1) {
+        printf("Overflow\n");
+    } else {
+        printf("Enter value: ");
+        scanf("%d", &val);
+        top = top + 1;
+        stack[top] = val;
+    }
+}
+
+void pop() {
+    if (top == -1) {
+        printf("Underflow\n");
+    } else {
+        top = top - 1;
+    }
+}
+
+void display() {
+    if (top == -1) {
+        printf("Stack is Empty\n");
+    } else {
+        for (int i = top; i >= 0; i--) {
+            printf("stack elements are %d ", stack[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    printf("Enter the number of elements in the stack: ");
+    scanf("%d", &n);
+    int choice;
+    while (1) {
+        printf("\nMenu\n");
+        printf("1. Push\n2. Pop\n3. Display\n4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                push();
+                break;
+            case 2:
+                pop();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("Please enter a valid choice\n");
+        }
+    }
+    return 0;
+}
