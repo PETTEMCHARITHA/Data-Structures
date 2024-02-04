@@ -1,0 +1,40 @@
+#include<stdio.h>
+int main(){
+int nodes;
+printf("Enter no of nodes:");
+scanf("%d",&nodes);
+int a[nodes][nodes], q[nodes+1],v[nodes];
+int i,j,start,f=-1,r=-1;
+
+printf("Enter the Matrix:");
+for(i=0;i<nodes;i++){
+    for(j=0;j<nodes;j++){
+        scanf("%d",&a[i][j]);
+    }
+}
+for(i=0;i<nodes;i++){
+    v[i]=0;
+}
+printf("Enter the starting vertex:");
+scanf("%d",&start);
+printf("BFS search %d",start);
+f=0;
+r=0;
+q[r]=start;
+v[start]=1;
+
+
+while(f<=r){
+    i=q[f];
+    printf("%3d",i);
+    for(j=0;j<nodes;j++){
+        if(a[i][j]==1 && !v[j]){
+            r++;
+            q[r]=j;
+            v[j]=1;
+        }
+    }
+    f++;
+}
+ return 0;
+}
