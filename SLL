@@ -1,0 +1,181 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* link;
+};
+
+struct node* createnode() {
+    struct node* head = (struct node*)malloc(sizeof(struct node));
+    head->data = 30;
+    head->link = NULL;
+
+    struct node* n1 = (struct node*)malloc(sizeof(struct node));
+    n1->data = 40;
+    n1->link = NULL;
+
+    head->link = n1;
+
+    struct node* n2 = (struct node*)malloc(sizeof(struct node));
+    n2->data = 50;
+    n2->link = NULL;
+
+    n1->link = n2;
+
+    return head;
+}
+
+struct node* insertbeg(struct node* head, int data) {
+    struct node* temp = (struct node*)malloc(sizeof(struct node));
+    temp->data = data;
+    temp->link = head;
+    head = temp;
+    return head;
+}
+
+void insertend(struct node* head, int data) {
+    struct node* temp = (struct node*)malloc(sizeof(struct node));
+    temp->data = data;
+    temp->link = NULL;
+
+    struct node* ptr = head;
+    while (ptr->link != NULL) {
+        ptr = ptr->link;
+    }
+    ptr->link = temp;
+}
+
+void insertrandom(struct node* head, int pos, int data) {
+    struct node* temp = (struct node*)malloc(sizeof(struct node));
+    temp->data = data;
+    struct node* ptr = head;
+    while (pos > 1 && ptr != NULL) {
+        ptr = ptr->link;
+        pos--;
+    }
+
+    temp->link = ptr->link;
+    ptr->link = temp;
+}
+
+struct node* delbeg(struct node* head) {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return NULL;
+    }
+    struct node* temp = head;
+    head = head->link;
+    free(temp);
+    return head;
+}
+
+void delend(struct node* head) {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+    struct node* temp = head;
+    struct node* prev = NULL;
+    while (temp->link != NULL) {
+        prev = temp;
+        temp = temp->link;
+    }
+    free(temp);
+    if (prev != NULL) {
+        prev->link = NULL;
+    } else {
+        head = NULL;
+    }
+}
+
+void delrandom(struct node* head, int pos) {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+    struct node* temp = head;
+    struct node* prev = NULL;
+
+    while (pos > 1 && temp != NULL) {
+        prev = temp;
+        temp = temp->link;
+        pos--;
+    }
+
+    if (temp == NULL) {
+        printf("Invalid position.\n");
+        return;
+    }
+
+    prev->link = temp->link;
+    free(temp);
+}
+
+void display(struct node* head) {
+    struct node* ptr = head;
+    while (ptr != NULL) {
+        printf("%d ", ptr->data);
+        ptr = ptr->link;
+    }
+    printf("\n");
+}
+
+int main() {
+    struct node* head = createnode();
+    int choice, data, pos;
+
+    while (1) {
+        printf("\nEnter choice:\n");
+        printf("1. Insert at beginning\n");
+        printf("2. Insert at end\n");
+        printf("3. Insert at random position\n");
+        printf("4. Delete from beginning\n");
+        printf("5. Delete from end\n");
+        printf("6. Delete from random position\n");
+        printf("7. Display\n");
+        printf("8. Exit\n");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter data to insert at beginning: ");
+                scanf("%d", &data);
+                head = insertbeg(head, data);
+                break;
+            case 2:
+                printf("Enter data to insert at end: ");
+                scanf("%d", &data);
+                insertend(head, data);
+                break;
+            case 3:
+                printf("Enter position to insert at: ");
+                scanf("%d", &pos);
+                printf("Enter data to insert: ");
+                scanf("%d", &data);
+                insertrandom(head, pos, data);
+                break;
+            case 4:
+                head = delbeg(head);
+                break;
+            case 5:
+                delend(head);
+                break;
+            case 6:
+                printf("Enter position to delete: ");
+                scanf("%d", &pos);
+                delrandom(head, pos);
+                break;
+            case 7:
+                printf("Linked List: ");
+                display(head);
+                break;
+            case 8:
+                exit(0);
+            default:
+                printf("Invalid choice.\n");
+        }
+    }
+
+    return 0;
+}
