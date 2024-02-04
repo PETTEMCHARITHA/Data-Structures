@@ -1,0 +1,59 @@
+#include <stdio.h> // This line includes the standard input-output library in C.
+
+void swap(int *a, int *b) // A function to swap the values of two integers.
+{
+    int temp=*a; // A temporary integer variable to hold the value of 'a'.
+    *a=*b; // The value at address 'a' is replaced with the value at address 'b'.
+    *b=temp; // The value at address 'b' is replaced with the temporary variable holding original value of 'a'.
+}
+
+void heapify(int arr[], int N,int i) // A function to create a max heap from an array.
+{
+    int largest=i; // A variable to store the index of the largest element in the subtree rooted at 'i'.
+    int left = 2*i + 1; // A variable to store the index of the left child of 'i'.
+    int right = 2*i + 2; // A variable to store the index of the right child of 'i'.
+    if(left<N && arr[left] > arr[largest]) // If the left child exists and is larger than the current largest element, update the largest element index to left child index.
+        largest=left;
+    if(right<N && arr[right] > arr[largest]) // If the right child exists and is larger than the current largest element, update the largest element index to right child index.
+        largest=right;
+    if(largest!=i) // If the largest element index is not the same as the current node index, swap them and recursively heapify the affected subtree.
+    {
+        swap(&arr[i],&arr[largest]); // Swap the values of the current node and the largest element using the swap function.
+        heapify(arr,N,largest); // Recursively call the heapify function on the subtree rooted at the largest element index.
+    }
+}
+
+void heapSort(int arr[],int N) // A function to perform heap sort on an array.
+{
+    int i,temp; // Declare two integer variables 'i' and 'temp'.
+    for(i=N/2-1;i>=0;i--) // Loop through the array from the middle element to the first element and heapify each element.
+    {
+        heapify(arr,N,i); // Call the heapify function on the element at index 'i' with the array size 'N'.
+    }
+    for(i=N-1;i>0;i--) // Loop through the array from the last element to the second element and swap the root element with the last element, then reduce the heap size by one and heapify the root element.
+    {
+        temp=arr[0]; // Store the value of the root element (which is the largest element in the heap) in the 'temp' variable.
+        arr[0]=arr[i]; // Replace the value of the root element with the value of the last element in the heap.
+        arr[i]=temp; // Replace the value of the last element in the heap with the value of the root element stored in the 'temp' variable.
+        heapify(arr,i,0); // Call the heapify function on the root element with the reduced heap size 'i'.
+    }
+}
+
+int main() // The main function of the program.
+{
+    int arr[]={20,18,5,15,3,2}; // Declare and initialize an array of integers to be sorted.
+    int n=6; // Declare and initialize an integer variable 'n' to store the size of the array.
+    printf("Original Array : "); // Print a message to indicate the original array.
+    for(int i=0;i<n;i++) // Loop through the array and print each element.
+    {
+        printf("%d ",arr[i]); // Print the element at index 'i' followed by a space.
+    }
+    printf("\n"); // Print a new line character to move to the next line.
+    heapSort(arr,n); // Call the heapSort function on the array with the size 'n'.
+    printf("Array after performing heap sort: "); // Print a message to indicate the sorted array.
+    for(int i=0;i<n;i++) // Loop through the array and print each element.
+    {
+        printf("%d ",arr[i]); // Print the element at index 'i' followed by a space.
+    }
+    return 0; // Return 0 to indicate successful execution of the program.
+}
