@@ -1,0 +1,102 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int key;
+    struct node *left, *right;
+};
+
+struct node* newNode(int item) {
+    struct node* temp = (struct node*)malloc(sizeof(struct node));
+    temp->key = item;
+    temp->left = temp->right = NULL;
+    return temp;
+}
+
+void inorder(struct node* root) {
+    if (root != NULL) {
+        inorder(root->left);
+        printf("%d ", root->key);
+        inorder(root->right);
+    }
+}
+
+void preorder(struct node* root) {
+    if (root != NULL) {
+        printf("%d ", root->key);
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+struct node* insert(struct node* root, int key) {
+    if (root == NULL) {
+        return newNode(key);
+    }
+    if (key < root->key)
+        root->left = insert(root->left, key);
+    else
+        root->right = insert(root->right, key);
+    return root;
+}
+
+struct node* deleteNode(struct node* root, int key) {
+    if (root == NULL)
+        return root;
+
+    if (key < root->key)
+        root->left = deleteNode(root->left, key);
+    else if (key > root->key)
+        root->right = deleteNode(root->right, key);
+    else {
+        // Node with only one child or no child
+        if (root->left == NULL) {
+            struct node* temp = root->right;
+            free(root);
+            return temp;
+        } else if (root->right == NULL) {
+            struct node* temp = root->left;
+            free(root);
+            return temp;
+        }
+
+        // Node with two children
+        struct node* temp = root->right;
+        while (temp->left != NULL)
+            temp = temp->left;
+
+        root->key = temp->key;
+        root->right = deleteNode(root->right, temp->key);
+    }
+
+    return root;
+}
+
+int main() {
+    struct node* root = NULL;
+    root = insert(root, 20);
+    root = insert(root, 30);
+    root = insert(root, 10);
+    root = insert(root, 90);
+    root = insert(root, 70);
+
+    printf("Original BST (Inorder): ");
+    inorder(root);
+    printf("\n");
+
+    printf("Original BST (Preorder): ");
+    preorder(root);
+    printf("\n");
+
+    root = deleteNode(root, 30);
+
+    printf("BST after deletion (Inorder): ");
+    inorder(root);
+    printf("\n");
+
+    printf("BST after deletion (Preorder): ");
+    preorder(root);
+    printf("\n");
+
+    return 0;
+}
