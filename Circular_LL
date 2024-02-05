@@ -1,0 +1,115 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	struct node* prev;
+	int data;
+	struct node* next;
+};
+struct node* create(struct node* temp){
+    temp->prev = temp;
+    temp->data = 22;
+    temp->next = temp;
+
+    struct node* n1 = (struct node*)malloc(sizeof(struct node));
+    n1->prev = temp;
+    n1->data = 34;
+    n1->next = temp;
+
+    temp->next = n1;
+    temp->prev = n1;
+
+    return temp;
+}
+struct node* insert_start(struct node* tail){
+	struct node* new=malloc(sizeof(struct node));
+	new->prev=NULL;
+	new->data=56;
+	new->next=NULL;
+	struct node* temp=tail->next;
+	new->prev=tail;
+	new->next=temp;
+	temp->prev=new;
+	tail->next=new;
+	return tail;
+}
+struct node* insert_end(struct node* tail){
+	struct node* temp=tail->next;
+	struct node* new=malloc(sizeof(struct node));
+	new->prev=NULL;
+	new->data=96;
+	new->next=NULL;
+	new->next=temp;
+	new->prev=tail;
+	tail->next=new;
+	temp->prev=new;
+	return tail;
+}
+struct node* insert_random(struct node* tail){
+	int pos;
+	struct node* new=malloc(sizeof(struct node));
+	printf("enter position to be inserted:");
+	scanf("%d",&pos);
+	new->prev=NULL;
+	new->data=94;
+	new->next=NULL;
+	struct node*temp=tail->next;
+	while(pos>1){
+		temp=temp->next;
+		pos--;
+	}
+	new->next = temp->next;
+    new->prev = temp;
+    temp->next->prev = new;
+    temp->next = new;
+    
+	return tail;
+}
+struct node* delete_start(struct node* tail){
+	struct node* temp=tail->next;
+	tail->next=temp->next;
+	temp->next->prev=tail;
+	free(temp);
+	return tail;
+	
+}
+struct node* delete_random(struct node* tail){
+	int pos;
+	printf("enter position to be deleted:");
+	scanf("%d",&pos);
+	struct node* temp=tail->next;
+	while(pos>1){
+		temp=temp->next;
+		pos--;
+	}
+	temp->prev->next = temp->next;
+    temp->next->prev = temp->prev;
+    free(temp);
+    return tail;
+}
+void display(struct node* tail){
+	struct node* temp=tail->next;
+	while(temp!=tail){
+		printf(" %d",temp->data);
+		temp=temp->next;
+	}
+}
+
+int main(){
+	struct node* tail=malloc(sizeof(struct node));
+	tail=create(tail);
+	tail=insert_start(tail);
+	tail=insert_end(tail);
+	tail=insert_random(tail);
+	tail=delete_start(tail);
+	tail=delete_random(tail);
+	display(tail);
+	struct node* temp = tail->next;
+    while (temp != tail) {
+        struct node* current = temp;
+        temp = temp->next;
+        free(current);
+    }
+    free(tail);
+	return 0;
+}
