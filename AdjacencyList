@@ -1,0 +1,56 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+struct node {
+    char data;
+    struct node *next;
+};
+
+int main() {
+    struct node *ptr;
+    struct node *temp;
+    struct node *head = NULL;
+    int n, d;
+    char ar[100];
+    char a[100];
+
+    printf("Enter the no. of Vertices:");
+    scanf("%d", &n);
+
+   
+    for (int i = 0; i < n; i++) {
+    printf("Enter the vertices:");
+        scanf(" %c", &ar[i]);
+
+        printf("Enter the no. of nodes connected to %c:", ar[i]);
+        scanf("%d", &d);
+        printf("Enter the nodes connected to %c:", ar[i]);
+
+        head = NULL;  // Reset the head for each vertex
+
+        for (int j = 0; j < d; j++) {
+            scanf(" %c", &a[j]);
+
+            ptr = (struct node *)malloc(sizeof(struct node));
+            ptr->data = a[j];
+            ptr->next = NULL;
+
+            if (head == NULL) {
+                head = temp = ptr;
+            } else {
+                temp->next = ptr;
+                temp = ptr;
+            }
+        }
+printf("%c ->",ar[i]);
+       
+        temp = head;
+        while (temp != NULL) {
+            printf("%c -> ", temp->data);
+            temp = temp->next;
+        }
+        printf("NULL\n");
+    }
+
+    return 0;
+}
