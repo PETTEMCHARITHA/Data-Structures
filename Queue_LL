@@ -5,30 +5,30 @@ struct Node{
 };
 struct Node* rear;
 struct Node* front;
-void insert(){
-    struct Node* ptr = (struct Node*)malloc(sizeof(struct Node));
+void enqueue(){
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     int value;
-    if(ptr==NULL){
+    if(newNode ==NULL){
         printf("overflow");
     }
     else{
         printf("enter the value to be inserted: ");
         scanf("%d",&value);
-        ptr->data=value;
+       newNode->data=value;
         if(front==NULL){
-            front=ptr;
-            rear=ptr;
+            front=newNode;
+            rear=newNode;
             rear->next=NULL;
             front->next=NULL;
         }
         else{
-            rear->next=ptr;
-            rear=ptr;
+            rear->next=newNode;
+            rear=newNode;
             rear->next=NULL;
         }
     }
 }
-void delete1(){
+void dequeue(){
     struct Node* ptr;
     if(front==NULL){
         printf("UNDERFLOW");
@@ -57,15 +57,15 @@ int main(){
     int choice;
     while(1){
         printf("main menu\n");
-        printf("1.insert \n2.delete \n3.display \n");
+        printf("1.Enqueue \n2.dequeue \n3.display \n");
         printf("enter your choice");
         scanf("%d",&choice);
         switch(choice){
             case 1:
-                insert();
+                enqueue();
                 break;
             case 2:
-                delete1();
+                dequeue();
                 break;
             case 3:
                 display();
