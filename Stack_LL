@@ -4,7 +4,7 @@ struct Node{
     int value;
     struct Node* next;
 };
-struct Node* head;
+struct Node* top;
 void  push(){
     int value;
     struct Node* ptr=(struct Node*)malloc(sizeof(struct Node));
@@ -14,15 +14,15 @@ void  push(){
     else{
         printf("enter value to be inserted : ");
         scanf("%d",&value);
-        if(head==NULL){
+        if(top==NULL){
             ptr->value=value;
             ptr->next=NULL;
-            head=ptr;
+            top=ptr;
         }
         else{
             ptr->value=value;
-            ptr->next=head;
-            head=ptr;
+            ptr->next=top;
+            top=ptr;
         }
     }
     printf("Item Pushed\n");
@@ -30,13 +30,13 @@ void  push(){
 void pop(){
     int item;
     struct Node* ptr;
-    if(head==NULL){
+    if(top==NULL){
         printf("UNDERFLOW");
     }
     else{
-        item=head->value;
-        ptr=head;
-        head=head->next;
+        item=top->value;
+        ptr=top;
+        top=top->next;
         free(ptr);
         printf("ITEM POPPED");
     }
@@ -44,7 +44,7 @@ void pop(){
 void display(){
     int i;
     struct Node* ptr;
-    ptr=head;
+    ptr=top;
     if(ptr==NULL){
         printf("stack is empty");
     }
